@@ -1,0 +1,44 @@
+@model StudentEducation
+<h1>@ViewData["Title"]</h1>
+<div class="row mt-3">
+    <div class="col-md-12">
+        <form class="row" method="post" enctype="multipart/form-data">
+            <input type="hidden" asp-for="UserId" value="@ViewData["userId"]" />
+            <div class="col-md-3 mb-2 form-group">
+                <label asp-for="Institute"></label>
+                <input asp-for="Institute" class="form-control" />
+                <span class="text-danger" asp-validation-for="Institute"></span>
+            </div>
+            <div class="col-md-3 mb-2 form-group">
+                <label asp-for="Year"></label>
+                <input asp-for="Year" class="form-control" />
+                <span class="text-danger" asp-validation-for="Year"></span>
+            </div>
+            <div class="col-md-3 mb-2 form-group">
+                <label asp-for="Degree"></label>
+                <input asp-for="Degree" class="form-control" />
+                <span class="text-danger" asp-validation-for="Degree"></span>
+            </div>
+            <div class="col-md-3 mb-2 form-group">
+                <label asp-for="Percentage"></label>
+                <input asp-for="Percentage" class="form-control" />
+                <span class="text-danger" asp-validation-for="Percentage"></span>
+            </div>
+            <div class="col-md-3 mb-2 form-group">
+                <label asp-for="DocumentFile"></label>
+                <input asp-for="DocumentFile" class="form-control" />
+                <span class="text-danger" asp-validation-for="DocumentFile"></span>
+            </div>
+            <div class="col-md-12 mb-2 form-group">
+                <button class="btn btn-success" type="submit">Submit</button>
+                <a class="btn btn-light" asp-area="Student" asp-action="Index" asp-controller="Education">Back</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial.cshtml" />
+    }
+}

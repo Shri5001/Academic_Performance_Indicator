@@ -1,0 +1,51 @@
+@model List<EvaluationReport>
+
+<h1>@ViewData["Title"]</h1>
+<h4 class="text-muted">@ViewData["SubTitle"]</h4>
+<div class="row">
+    <div class="col-md-12">
+        <partial name="_Messages" />
+    </div>
+    <div class="col-md-12 mb-2">
+        <a class="btn btn-primary" asp-area="Teacher" asp-action="Create" asp-controller="EVReport">Create new report</a>
+    </div>
+
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Branch</th>
+                        <th>Subject</th>
+                        <th>Academic Year</th>
+                        <th>Year</th>
+                        <th>Semester</th>
+                        <th>Fill Marks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var i in Model.OrderByDescending(u => u.Id))
+                    {
+                        <tr>
+                            <td>@i.Branch.Name</td>
+                            <td>@i.Subject.Code-@i.Subject.Name</td>
+                            <td>@i.Year</td>
+                            <td>@i.BranchYear</td>
+                            <td>@i.Sem</td>
+                            <td>
+                                @if(i.ReportData == null)
+                                {
+                                    <a class="text-info" asp-area="Teacher" asp-action="FillMarks" asp-controller="EVReport" asp-route-id="@i.Id">Fill Marks</a>
+                                }
+                                else
+                                {
+                                    <a class="text-info" asp-area="Teacher" asp-action="ShowReport" asp-controller="EVReport" asp-route-id="@i.Id">Show Report</a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

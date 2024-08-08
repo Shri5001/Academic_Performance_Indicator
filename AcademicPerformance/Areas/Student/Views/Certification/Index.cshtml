@@ -1,0 +1,42 @@
+@model List<StudentCertification>
+<h1>@ViewData["Title"]</h1>
+
+<div class="row mt-3">
+    <div class="col-md-12">
+        <partial name="_Messages" />
+    </div>
+
+    <div class="col-md-12">
+        <a asp-action="Create" asp-area="Student" asp-controller="Certification" class="btn btn-primary">Add Certifcation</a>
+    </div>
+
+    <div class="col-md-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Course</th>
+                    <th>Institute</th>
+                    <th>From-To</th>
+                    <th>Document</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var i in Model)
+                {
+                    <tr>
+                        <td>@i.Course</td>
+                        <td>@i.Institute</td>
+                        <td>@i.Year</td>
+                        <td>
+                            <a href="~/storage/student/certificate/@i.FileUrl" target="_blank">Document</a>
+                        </td>
+                        <td>
+                            <a asp-action="Delete" asp-controller="Certification" asp-route-id="@i.Id" class="text-danger">Remove</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,356 @@
+@model StudentHomeVM
+<h1>@ViewData["Title"]</h1>
+
+<div class="row mt-3">
+    <div class="col-md-12">
+        <partial name="_Messages" />
+    </div>
+    <div class="col-md-3">
+        <h4>Job Openings</h4>
+        <div class="table-responsive">
+            <table class="table">
+                <tbody>
+                    @foreach (var i in Model.Jobs.OrderByDescending(u => u.Id))
+                    {
+                        <tr>
+                            <td><a class="text-info" asp-area="Student" asp-action="ViewJob" asp-controller="Dashboard" asp-route-id="@i.Id">@i.Title</a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="col-md-9">
+        <div class="card">
+            <div class="card-body">
+                <div class="row justify-content-center">
+                    <div class="col-md-12">
+                        <div class="row align-items-center">
+                            <div class="col-lg-5">
+                                <div class="resume-base bg-primary user-dashboard-info-box p-4">
+                                    <div class="profile">
+                                        <div class="jobster-user-info">
+                                            <div class="profile-avatar">
+                                                <img class="img-fluid " src="~/storage/student/images/@Model.Student.ImageUrl" alt="" height="100">
+                                            </div>
+                                            <div class="profile-avatar-info mt-3">
+                                                <h5 class="text-white">@Model.Student.User.FullName</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="about-candidate border-top">
+                                        <div class="candidate-info">
+                                            <h6 class="text-white">Email:</h6>
+                                            <p class="text-white">@Model.Student.User.Email</p>
+                                        </div>
+                                        <div class="candidate-info">
+                                            <h6 class="text-white">Phone:</h6>
+                                            <p class="text-white">@Model.Student.Mobile</p>
+                                        </div>
+                                        <div class="candidate-info">
+                                            <h6 class="text-white">Date Of Birth:</h6>
+                                            <p class="text-white">@Model.Student.DOB?.ToString("dd-MM-yyyy")</p>
+                                        </div>
+                                        <div class="candidate-info">
+                                            <h6 class="text-white">Address:</h6>
+                                            <p class="text-white">@Model.Student.Address</p>
+                                        </div>
+                                        <div class="candidate-info">
+                                            <h6 class="text-white">Gender:</h6>
+                                            <p class="text-white">@Model.Student.Gender</p>
+                                        </div>
+                                    </div>
+                                    <div class="mt-0">
+                                        <h5 class="text-white">About:</h5>
+                                        <div class="text-white">
+                                            <p>
+                                                @Html.Raw(@Model.Student.About)
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-7">
+                                <div class="resume-experience">
+                                    <div class="timeline-box">
+                                        <h5 class="resume-experience-title">Education:</h5>
+                                        <div class="jobster-candidate-timeline">
+                                            @foreach(var i in Model.Education.OrderByDescending(u => u.Year)) {
+                                            <div class="jobster-timeline-item">
+                                                <div class="jobster-timeline-cricle">
+                                                    <i class="far fa-circle"></i>
+                                                </div>
+                                                <div class="jobster-timeline-info">
+                                                    <div class="dashboard-timeline-info">
+                                                        <span class="jobster-timeline-time">@i.Year</span>
+                                                        <h6 class="mb-2">@i.Degree</h6>
+                                                        <span>- @i.Institute</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="timeline-box mt-4">
+                                        <h5 class="resume-experience-title">Certification:</h5>
+                                        <div class="jobster-candidate-timeline">
+                                            @foreach (var i in Model.Certification.OrderByDescending(u => u.Year))
+                                            {
+                                                <div class="jobster-timeline-item">
+                                                    <div class="jobster-timeline-cricle">
+                                                        <i class="far fa-circle"></i>
+                                                    </div>
+                                                    <div class="jobster-timeline-info">
+                                                        <div class="dashboard-timeline-info">
+                                                            <span class="jobster-timeline-time">@i.Year</span>
+                                                            <h6 class="mb-2">@i.Course</h6>
+                                                            <span>- @i.Institute</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+
+                                    <h5 class="resume-experience-title">HandOn Experience:</h5>
+                                    <div class="dashboard-timeline-info">
+                                        <p class="mt-2">
+                                            @Html.Raw(@Model.Student.HandsOn)
+                                        </p>
+                                    </div>
+
+                                    <h5 class="resume-experience-title">Internships: </h5>
+                                    <div class="dashboard-timeline-info">
+                                        <p class="mt-2">
+                                            @Html.Raw(@Model.Student.Interships)
+                                        </p>
+                                    </div>
+
+                                    <h5 class="resume-experience-title">Other Activities: </h5>
+                                    <div class="dashboard-timeline-info">
+                                        <p class="mt-2">
+                                            @Html.Raw(@Model.Student.OtherActivities)
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles{
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
+    <style>
+        /* My Resume */
+        .profile {
+            margin-bottom: 25px;
+        }
+        .profile .jobster-user-info {
+            display: inline-block;
+            width: 100%;
+        }
+        .profile .jobster-user-info .profile-avatar {
+            position: relative;
+            height: 115px;
+            width: 115px;
+            border-radius: 100%;
+            display: inline-block;
+        }
+        .profile .jobster-user-info .profile-avatar img {
+            border-radius: 100%;
+        }
+        .profile .jobster-user-info .profile-avatar i {
+            font-size: 16px;
+            color: #21c87a;
+            position: absolute;
+            background: #ffffff;
+            border-radius: 100%;
+            cursor: pointer;
+            height: 30px;
+            width: 30px;
+            line-height: 30px;
+            text-align: center;
+            bottom: 20px;
+            right: -5px;
+        }
+
+        .about-candidate {
+            padding: 25px 0px;
+        }
+        .about-candidate .candidate-info {
+            margin-bottom: 20px;
+        }
+
+        .resume-experience {
+            padding-left: 10px;
+            padding-top: 60px;
+            padding-bottom: 60px;
+            position: relative;
+            padding-right: 50px;
+            background: #f6f6f6;
+        }
+        .resume-experience:before {
+            position: absolute;
+            left: -40%;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: #f6f6f6;
+            content: "";
+            z-index: -1;
+            top: 0;
+        }
+        .resume-experience .jobster-candidate-timeline .jobster-timeline-item .jobster-timeline-cricle {
+            border-color: #f6f6f6;
+        }
+
+        .user-dashboard-info-box .select2-container--default .select2-selection--single .select2-selection__rendered {
+            font-weight: bold;
+            color: #626262;
+        }
+
+        /*****************************
+            Progress Bar
+        *****************************/
+        .progress {
+            position: relative;
+            overflow: inherit;
+            height: 3px;
+            margin: 40px 0px 15px;
+            width: 100%;
+            display: inline-block;
+        }
+        .progress .progress-bar {
+            height: 3px;
+            background: #21c87a;
+        }
+        .progress .progress-bar-title {
+            position: absolute;
+            left: 0;
+            top: -20px;
+            color: #212529;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .progress .progress-bar-number {
+            position: absolute;
+            right: 0;
+            color: #646f79;
+            top: -20px;
+        }
+
+
+        /* Jobster Candidate */
+        .jobster-candidate-timeline {
+            position: relative;
+        }
+        .jobster-candidate-timeline:before {
+            content: "";
+            position: absolute;
+            left: 20px;
+            width: 2px;
+            top: 5px;
+            bottom: 5px;
+            height: calc(100% - 5px);
+            background-color: #eeeeee;
+        }
+
+        .jobster-candidate-timeline .jobster-timeline-item {
+            display: table;
+            position: relative;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        .jobster-candidate-timeline .jobster-timeline-item .jobster-timeline-cricle {
+            border-radius: 50%;
+            border: 12px solid white;
+            z-index: 1;
+            top: 5px;
+            left: 9px;
+            position: absolute;
+        }
+        .jobster-candidate-timeline .jobster-timeline-item .jobster-timeline-cricle:before {
+            content: "";
+            position: absolute;
+            left: 12px;
+            width: 20px;
+            top: -1px;
+            bottom: 5px;
+            height: 2px;
+            background-color: #eeeeee;
+        }
+        .jobster-candidate-timeline .jobster-timeline-item .jobster-timeline-cricle > i {
+            font-size: 15px;
+            top: -8px;
+            left: -7px;
+            position: absolute;
+            color: #21c87a;
+        }
+
+        .jobster-candidate-timeline .jobster-timeline-item .jobster-timeline-info {
+            display: table-cell;
+            vertical-align: top;
+            padding: 5px 0 0 70px;
+        }
+        .jobster-candidate-timeline .jobster-timeline-item .jobster-timeline-info h6 {
+            color: #21c87a;
+            margin: 5px 0 0px;
+        }
+        .jobster-candidate-timeline .jobster-timeline-item .jobster-timeline-info span {
+            color: #212529;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .jobster-candidate-timeline span.jobster-timeline-time {
+            color: #646f79 !important;
+        }
+
+        .jobster-candidate-timeline .jobster-timeline-icon {
+            border: 2px solid #eeeeee;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            line-height: 42px;
+            text-align: center;
+            background: #ffffff;
+            position: relative;
+            margin-bottom: 20px;
+        }
+        .jobster-candidate-timeline .jobster-timeline-icon i {
+            font-size: 16px;
+            color: #212529;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            top: 16px;
+        }
+
+        .secondary-menu ul li a {
+            padding: 4px 8px;
+        }
+
+        .resume-experience {
+            padding-left: 15px;
+            padding-top: 30px;
+            padding-bottom: 30px;
+            padding-right: 15px;
+        }
+
+        .resume-experience:before {
+            content: none;
+        }
+
+        .secondary-menu ul li {
+            display: inline-block;
+        }
+
+
+    </style>
+}

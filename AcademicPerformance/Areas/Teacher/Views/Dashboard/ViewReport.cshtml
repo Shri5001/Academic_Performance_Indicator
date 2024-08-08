@@ -1,0 +1,187 @@
+@model ReportViewModel
+<h1>@ViewData["Title"]</h1>
+
+<div class="row mt-3">
+    <div class="col-md-12">
+        <table class="table table-bordered table-sm">
+            <thead>
+                <tr>
+                    <th>Subject Name</th>
+                    <th>Subject Code</th>
+                    <th>Present Students</th>
+                    <th>Passed Students</th>
+                    <th>Failed Students</th>
+                    <th>Passing Percentage</th>
+                    <th>Teacher</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var subjectData in Model.SubjectDataList)
+                {
+                    <tr>
+                        <td>@subjectData.SubjectName</td>
+                        <td>@subjectData.SubjectCode</td>
+                        <td>@subjectData.PresentStudents</td>
+                        <td>@subjectData.PassedStudents</td>
+                        <td>@subjectData.FailedStudents</td>
+                        <td>@subjectData.PassingPercentage.ToString("0.00")%</td>
+                        <td>@subjectData.Teacher</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-md-12">
+        <h4 class="text-center">Result Statistics</h4>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Sr.No</th>
+                    <th>Deatils</th>
+                    <th>Result</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>01.</td>
+                    <td>Total No. Students appeared in in Examination</td>
+                    <td>@ViewData["countPresent"]</td>
+                </tr>
+                <tr>
+                    <td>02.</td>
+                    <td>Total No. Students All Clear</td>
+                    <td>@ViewData["countPassed"]</td>
+                </tr>
+                <tr>
+                    <td>03.</td>
+                    <td>Total No. Students Passed with ATKT</td>
+                    <td>@ViewData["countAtkt"]</td>
+                </tr>
+                <tr>
+                    <td>04.</td>
+                    <td>Total No. Students Failed</td>
+                    <td>@ViewData["countFailed"]</td>
+                </tr>
+                <tr>
+                    <td>05.</td>
+                    <td>Total No. Students passed with Distinction</td>
+                    <td>@ViewData["countDistinct"]</td>
+                </tr>
+                <tr>
+                    <td>06.</td>
+                    <td>Total No. Students passed with First Class</td>
+                    <td>@ViewData["countFirst"]</td>
+                </tr>
+                <tr>
+                    <td>07.</td>
+                    <td>Total No. Students passed with Higher Second Class</td>
+                    <td>@ViewData["countSecondHigh"]</td>
+                </tr>
+                <tr>
+                    <td>08.</td>
+                    <td>Total No. Students passed with Second Class</td>
+                    <td>@ViewData["countSecond"]</td>
+                </tr>
+                <tr>
+                    <td>09.</td>
+                    <td>Total No. Students passed with Pass Class</td>
+                    <td>@ViewData["countPassing"]</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-md-12">
+        <canvas id="resultChart" height="100"></canvas>
+    </div>
+
+    <div class="col-md-12 mt-3">
+        <h4 class="text-center">Top 3 Students</h4>
+        <table class="table table-bordered table-sm">
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Student Name</th>
+                    <th>Percentage</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.TopStudents.Count && i < 3; i++)
+                {
+                    <tr>
+                        <td>@(i + 1)</td>
+                        <td>@Model.TopStudents[i].StudentName</td>
+                        <td>@Model.TopStudents[i].Percentage</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+@section Scripts{
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Retrieve data from ViewData
+            var labels = ["Present", "Passed", "ATKT", "Failed", "Distinct", "First", "SecondHigh", "Second", "Passing"];
+            var data = [
+        @ViewData["countPresent"],
+        @ViewData["countPassed"],
+        @ViewData["countAtkt"],
+        @ViewData["countFailed"],
+        @ViewData["countDistinct"],
+        @ViewData["countFirst"],
+        @ViewData["countSecondHigh"],
+        @ViewData["countSecond"],
+        @ViewData["countPassing"]
+                    ];
+
+            // Create chart
+            var ctx = document.getElementById('resultChart').getContext('2d');
+            var chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Result Statistics',
+                        data: data,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)',
+                            'rgba(220, 20, 60, 0.2)',
+                            'rgba(0, 255, 0, 0.2)',
+                            'rgba(0, 0, 255, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)',
+                            'rgba(220, 20, 60, 1)',
+                            'rgba(0, 255, 0, 1)',
+                            'rgba(0, 0, 255, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+}
+

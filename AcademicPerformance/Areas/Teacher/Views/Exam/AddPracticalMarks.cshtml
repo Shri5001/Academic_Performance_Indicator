@@ -1,0 +1,139 @@
+@using Newtonsoft.Json
+@model PracticalExamStudentVM
+<h1>@ViewData["Title"]</h1>
+
+<div class="row mt-3">
+    <div class="col-md-12">
+        <partial name="_Messages" />
+        <form id="practicalForm" method="post" class="row">
+            <input asp-for="@Model.PracticalMarks.BranchId" type="hidden" value="@Model.ExamSubject.BranchId" />
+            <input asp-for="@Model.PracticalMarks.SubjectId" type="hidden" value="@Model.ExamSubject.SubjectId" />
+            <input asp-for="@Model.PracticalMarks.ExamId" type="hidden" value="@Model.ExamSubject.ExamId" />
+            <input asp-for="@Model.ExamSubject.Id" type="hidden" />
+            <div class="form-group col-md-3 mb-2">
+                <label asp-for="@Model.PracticalMarks.StudentId"></label>
+                <select class="form-control" asp-for="@Model.PracticalMarks.StudentId" asp-items="@Model.Students">
+                    <option disabled selected>Select Student</option>
+                </select>
+                <span class="text-danger" asp-validation-for="@Model.PracticalMarks.StudentId"></span>
+            </div>
+            <div class="form-group col-md-3 mb-2">
+                <label asp-for="@Model.PracticalMarks.SeatNo"></label>
+                <input asp-for="@Model.PracticalMarks.SeatNo" class="form-control" />
+                <span class="text-danger" asp-validation-for="@Model.PracticalMarks.SeatNo"></span>
+            </div>
+            <div class="form-group col-md-3 mb-2">
+                <label asp-for="@Model.PracticalMarks.Attendance"></label>
+                <select class="form-control" asp-for="@Model.PracticalMarks.Attendance">
+                    <option disabled selected>Select Attendance</option>
+                    <option value="P">Present</option>
+                    <option value="AB">Absent</option>
+                </select>
+                <span class="text-danger" asp-validation-for="@Model.PracticalMarks.Attendance"></span>
+            </div>
+            <div class="form-group col-md-3 mb-2">
+                <label asp-for="@Model.PracticalMarks.ExternalPractical"></label>
+                <input asp-for="@Model.PracticalMarks.ExternalPractical" class="form-control" min="0" max="25" />
+                <span class="text-danger" asp-validation-for="@Model.PracticalMarks.ExternalPractical"></span>
+            </div>
+            @foreach (var experiment in Model.ExperimentMarks)
+            {
+                <div class="form-group col-md-3 mb-2 section-marks">
+                    <label>@experiment.ExperimentName</label>
+                    @for (var i = 0; i < experiment.SubsectionMarks.Count; i++)
+                    {
+                        <input class="form-control" type="number" min="0" max="10" placeholder="@experiment.SubsectionMarks[i].SubsectionName" />
+                    }
+                </div>
+            }
+            <input type="hidden" id="experimentMarks" asp-for="@Model.PracticalMarks.ExperimentMarks" />
+            <div class="form-group mb-2">
+                <button type="button" onclick="submitForm()" class="btn btn-success">Submit</button>
+                <a class="btn btn-light" asp-area="Teacher" asp-action="Subjects" asp-controller="Exam" asp-route-id="@Model.Exam.Id">Back</a>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-md-12 mt-3">
+        <table class="table table-bordered table-sm">
+            <thead>
+                <tr>
+                    <th rowspan="2">Student</th>
+                    <th rowspan="2">Seat No</th>
+                    <th rowspan="2">Attendance</th>
+                    <th colspan="12">Experiments</th>
+                    <th rowspan="2">Total 480</th>
+                    <th rowspan="2">TermWork</th>
+                    <th rowspan="2">External Practical</th>
+                </tr>
+                <tr>
+                    @for (int i = 1; i <= 12; i++) 
+                    {
+                        <th>Exp. @i</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var mark in Model.PraticalMarksList)
+                {
+                    <tr>
+                        <td>@mark.Student.User.FullName</td>
+                        <td>@mark.SeatNo</td>
+                        <td>@mark.Attendance</td>
+                        @foreach (var experiment in JsonConvert.DeserializeObject<List<ExperimentMarksVM>>(mark.ExperimentMarks))
+                        {
+                            <td>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            @* <th>Subsection</th> *@
+                                            <th>Marks</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var subsection in experiment.SubsectionMarks)
+                                        {
+                                            <tr>
+                                                @* <td>@subsection.SubsectionName</td> *@
+                                                <td>@subsection.Marks</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </td>
+                        }
+                        <td>@mark.Total480</td>
+                        <td>@mark.Total</td>
+                        <td>@mark.ExternalPractical</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        function submitForm() {
+            var experimentMarks = [];
+            var experimentContainers = document.querySelectorAll('.form-group.col-md-3.mb-2.section-marks');
+            experimentContainers.forEach(container => {
+                var experimentName = container.querySelector('label').textContent;
+                var marksInputs = container.querySelectorAll('input[type="number"]');
+                var subsectionMarks = [];
+                marksInputs.forEach(input => {
+                    subsectionMarks.push({
+                        SubsectionName: input.getAttribute('placeholder'),
+                        Marks: input.value ? parseInt(input.value) : 0
+                    });
+                });
+                experimentMarks.push({
+                    ExperimentName: experimentName,
+                    SubsectionMarks: subsectionMarks
+                });
+            });
+            console.log(JSON.stringify(experimentMarks));
+            document.getElementById('experimentMarks').value = JSON.stringify(experimentMarks);
+            document.getElementById('practicalForm').submit();
+        }
+    </script>
+}

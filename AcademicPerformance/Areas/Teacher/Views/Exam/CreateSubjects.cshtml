@@ -1,0 +1,54 @@
+@model TeacherExamSubjectVM
+<h1>@ViewData["Title"]</h1>
+
+<div class="row mt-3">
+    <div class="col-md-12">
+        <form method="post" class="row">
+            <input asp-for="@Model.ExamSubject.UserId" value="@Model.User.Id" type="hidden" />
+            <input asp-for="@Model.ExamSubject.ExamId" value="@Model.Exam.Id" type="hidden" />
+            <input asp-for="@Model.ExamSubject.BranchId" value="@Model.BranchId" type="hidden" />
+            <div class="form-group col-md-3 mb-2">
+                <label asp-for="@Model.ExamSubject.SubjectId"></label>
+                <select asp-for="@Model.ExamSubject.SubjectId" asp-items="@Model.Subjects" class="form-control">
+                    <option disabled selected>Select Subject</option>
+                </select>
+                <span class="text-danger" asp-validation-for="@Model.ExamSubject.SubjectId"></span>
+            </div>
+            <div class="form-group col-md-3 mb-2">
+                <label asp-for="@Model.ExamSubject.Year"></label>
+                <select asp-for="@Model.ExamSubject.Year" class="form-control">
+                    <option disabled selected>Select</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
+                <span class="text-danger" asp-validation-for="@Model.ExamSubject.Year"></span>
+            </div>
+            <div class="form-group col-md-3 mb-2">
+                <label asp-for="@Model.ExamSubject.Sem"></label>
+                <select asp-for="@Model.ExamSubject.Sem" class="form-control">
+                    <option disabled selected>Select</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                </select>
+                <span class="text-danger" asp-validation-for="@Model.ExamSubject.Sem"></span>
+            </div>
+            <div class="form-group mb-2">
+                <button type="submit" class="btn btn-success">Submit</button>
+                <a class="btn btn-light" asp-area="Teacher" asp-action="Subjects" asp-controller="Exam" asp-route-id="@Model.Exam.Id">Back</a>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial.cshtml" />
+    }
+}

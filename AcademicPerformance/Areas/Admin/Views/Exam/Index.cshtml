@@ -1,0 +1,36 @@
+@model List<Exam>
+<h1>@ViewData["Title"]</h1>
+
+<div class="row">
+    <div class="col-md-12">
+        <partial name="_Messages" />
+    </div>
+    <div class="col-md-12 mb-2">
+        <a class="btn btn-primary" asp-area="Admin" asp-action="Create" asp-controller="Exam">Create new exam</a>
+    </div>
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Academic Year</th>
+                        <th>Month</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var i in Model)
+                    {
+                        <tr>
+                            <td>@i.Year</td>
+                            <td>@i.Month</td>
+                            <td>
+                                <a class="text-info" asp-area="Admin" asp-action="Edit" asp-controller="Exam" asp-route-id="@i.Id">Edit</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

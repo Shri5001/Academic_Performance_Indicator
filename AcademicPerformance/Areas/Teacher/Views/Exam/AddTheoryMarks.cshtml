@@ -1,0 +1,80 @@
+@model TheoryExamStudentVM
+<h1>@ViewData["Title"]</h1>
+
+<div class="row mt-3">
+    <div class="col-md-12">
+        <partial name="_Messages" />
+        <form method="post" class="row">
+            <input asp-for="@Model.TheoryMarks.BranchId" type="hidden" value="@Model.ExamSubject.BranchId" />
+            <input asp-for="@Model.TheoryMarks.SubjectId" type="hidden" value="@Model.ExamSubject.SubjectId" />
+            <input asp-for="@Model.TheoryMarks.ExamId" type="hidden" value="@Model.ExamSubject.ExamId" />
+            <input asp-for="@Model.ExamSubject.Id" type="hidden" />
+            <div class="form-group col-md-3 mb-2">
+                <label asp-for="@Model.TheoryMarks.StudentId"></label>
+                <select class="form-control" asp-for="@Model.TheoryMarks.StudentId" asp-items="@Model.Students">
+                    <option disabled selected>Select Student</option>
+                </select>
+                <span class="text-danger" asp-validation-for="@Model.TheoryMarks.StudentId"></span>
+            </div>
+            <div class="form-group col-md-3 mb-2">
+                <label asp-for="@Model.TheoryMarks.SeatNo"></label>
+               <input asp-for="@Model.TheoryMarks.SeatNo" class="form-control" />
+                <span class="text-danger" asp-validation-for="@Model.TheoryMarks.SeatNo"></span>
+            </div>
+            <div class="form-group col-md-3 mb-2">
+                <label asp-for="@Model.TheoryMarks.Attendance"></label>
+                <select class="form-control" asp-for="@Model.TheoryMarks.Attendance">
+                    <option disabled selected>Select Attendance</option>
+                    <option value="P">Present</option>
+                    <option value="AB">Absent</option>
+                </select>
+                <span class="text-danger" asp-validation-for="@Model.TheoryMarks.Attendance"></span>
+            </div>
+            <div class="form-group col-md-3 mb-2">
+                <label asp-for="@Model.TheoryMarks.InSem"></label>
+                <input asp-for="@Model.TheoryMarks.InSem" class="form-control" />
+                <span class="text-danger" asp-validation-for="@Model.TheoryMarks.InSem"></span>
+            </div>
+            <div class="form-group col-md-3 mb-2">
+                <label asp-for="@Model.TheoryMarks.EndSem"></label>
+                <input asp-for="@Model.TheoryMarks.EndSem" class="form-control" />
+                <span class="text-danger" asp-validation-for="@Model.TheoryMarks.EndSem"></span>
+            </div>
+            <div class="form-group mb-2">
+                <button type="submit" class="btn btn-success">Submit</button>
+                <a class="btn btn-light" asp-area="Teacher" asp-action="Subjects" asp-controller="Exam" asp-route-id="@Model.Exam.Id">Back</a>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-md-12 mt-3">
+        <table class="table table-bordered table-sm">
+            <thead>
+                <tr>
+                    <th>Student</th>
+                    <th>Seat No</th>
+                    <th>Attendance</th>
+                    <th>InSem</th>
+                    <th>EndSem</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var mark in Model.TheoryMarksList)
+                {
+                    <tr>
+                        <td>@mark.Student.User.FullName</td>
+                        <td>@mark.SeatNo</td>
+                        <td>@mark.Attendance</td>
+                        <td>@mark.InSem</td>
+                        <td>@mark.EndSem</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial.cshtml" />
+    }
+}

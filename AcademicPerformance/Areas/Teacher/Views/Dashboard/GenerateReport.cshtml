@@ -1,0 +1,44 @@
+@model Exam
+<h1>@ViewData["Title"]</h1>
+
+<div class="row mt-3">
+    <div class="col-md-12">
+        <form method="post" class="row">
+            <input type="hidden" id="examId" name="examId" value="@Model.Id" />
+            <input type="hidden" id="branchId" name="branchId" value="@ViewData["branchId"]" />
+            <div class="form-group col-md-3 mb-2">
+                <label>Year</label>
+                <select id="year" name="year" class="form-control">
+                    <option disabled selected>Select</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
+            </div>
+            <div class="form-group col-md-3 mb-2">
+                <label>Semester</label>
+                <select id="semester" name="semester" class="form-control">
+                    <option disabled selected>Select</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                </select>
+            </div>
+            <div class="form-group mb-2">
+                <button type="submit" class="btn btn-success">View Report</button>
+                <a class="btn btn-light" asp-area="Teacher" asp-action="Index" asp-controller="Dashboard">Back</a>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial.cshtml" />
+    }
+}

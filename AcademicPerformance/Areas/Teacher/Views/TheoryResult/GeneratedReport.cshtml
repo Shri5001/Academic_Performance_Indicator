@@ -1,0 +1,112 @@
+@model List<SubjectStatistics>
+@{
+    int countPresent = 0;
+    int countPassed = 0;
+    int countFailed = 0;
+    int countDistinct = 0;
+    int countFirst = 0;
+    int countSecondHigh = 0;
+    int countSecond = 0;
+    int countPassing = 0;
+    int countAtkt = 0;
+}
+<h1>@ViewData["Title"]</h1>
+<div class="row">
+    <div class="col-md-12">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Subject Name</th>
+                    <th>Present Students</th>
+                    <th>Passed Students</th>
+                    <th>Failed Students</th>
+                    <th>Passing Percentage</th>
+                    <th>Teacher</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var stats in Model)
+                {
+                    @* countPresent += stats.PresentStudents;
+                    countFailed += stats.FailedStudents;
+                    countPassed += stats.PassedStudents;
+                    countDistinct += stats.DistinctionStudents;
+                    countFirst += stats.FirstClassStudents;
+                    countSecondHigh += stats.HigherSecondClassStudents;
+                    countSecond += stats.SecondClassStudents;
+                    countPassing += stats.PassingClassStudents;
+                    countAtkt += stats.PassedWithATKT; *@
+                    <tr>
+                        <td>@stats.Subject.Code - @stats.Subject.Name</td>
+                        <td>@stats.PresentStudents</td>
+                        <td>@stats.PassedStudents</td>
+                        <td>@stats.FailedStudents</td>
+                        <td>@stats.PassingPercentage%</td>
+                        <td>@stats.Teacher.FullName</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+
+    <div class="col-md-12">
+        <h4 class="text-center">Result Statistics</h4>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Sr.No</th>
+                    <th>Deatils</th>
+                    <th>Result</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>01.</td>
+                    <td>Total No. Students appeared in in Examination</td>
+                    <td>@ViewData["countPresent"]</td>
+                </tr>
+                <tr>
+                    <td>02.</td>
+                    <td>Total No. Students All Clear</td>
+                    <td>@ViewData["countPassed"]</td>
+                </tr>
+                <tr>
+                    <td>03.</td>
+                    <td>Total No. Students Passed with ATKT</td>
+                    <td>@ViewData["countAtkt"]</td>
+                </tr>
+                <tr>
+                    <td>04.</td>
+                    <td>Total No. Students Failed</td>
+                    <td>@ViewData["countFailed"]</td>
+                </tr>
+                <tr>
+                    <td>05.</td>
+                    <td>Total No. Students passed with Distinction</td>
+                    <td>@ViewData["countDistinct"]</td>
+                </tr>
+                <tr>
+                    <td>06</td>
+                    <td>Total No. Students passed with First Class</td>
+                    <td>@ViewData["countFirst"]</td>
+                </tr>
+                <tr>
+                    <td>05</td>
+                    <td>Total No. Students passed with Higher Second Class</td>
+                    <td>@ViewData["countSecondHigh"]</td>
+                </tr>
+                <tr>
+                    <td>05</td>
+                    <td>Total No. Students passed with Second Class</td>
+                    <td>@ViewData["countSecond"]</td>
+                </tr>
+                <tr>
+                    <td>05</td>
+                    <td>Total No. Students passed with Pass Class</td>
+                    <td>@ViewData["countPassing"]</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

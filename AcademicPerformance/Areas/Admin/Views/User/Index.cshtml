@@ -1,0 +1,49 @@
+@model List<UserWithRole>
+<h1>@ViewData["Title"]</h1>
+
+<div class="row">
+    <div class="col-md-12">
+        <partial name="_Messages" />
+    </div>
+    <div class="col-md-12 mb-2">
+        <a class="btn btn-primary" asp-area="Admin" asp-action="Create" asp-controller="User">Create new User</a>
+    </div>
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>Name</th>
+                        <th>Role</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var i in Model.OrderBy(u => u.FullName))
+                    {
+                        <tr>
+                            <td>@i.UserId</td>
+                            <td>@i.Username</td>
+                            <td>@i.FullName</td>
+                            <td>@i.Role</td>
+                            <td>
+                                <a class="text-info" asp-area="Admin" asp-action="Edit" asp-controller="User" asp-route-email="@i.Email">Edit</a>
+                                @if(i.Role == "Teacher")
+                                {
+                                    <a class="text-success" asp-area="Admin" asp-action="Create" asp-controller="Teacher" asp-route-id="@i.UserId">Details</a>
+                                    <a class="text-primary" asp-area="Admin" asp-action="Subjects" asp-controller="Teacher" asp-route-id="@i.UserId">Subjects</a>
+                                }
+                                @if (i.Role == "Student")
+                                {
+                                    <a class="text-success" asp-area="Admin" asp-action="Create" asp-controller="Student" asp-route-id="@i.UserId">Details</a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

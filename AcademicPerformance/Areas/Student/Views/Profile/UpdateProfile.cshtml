@@ -1,0 +1,101 @@
+@model Student
+<h1>@ViewData["Title"]</h1>
+<div class="row mt-3">
+    <div class="col-md-12">
+        <form class="row" method="post" enctype="multipart/form-data">
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="ClassSection" />
+            <input type="hidden" asp-for="ClassYear" />
+            <input type="hidden" asp-for="BranchId" />
+            <input type="hidden" asp-for="Aadhaar" />
+            <input type="hidden" asp-for="PRN" />
+            <input type="hidden" asp-for="UserId" />
+            <input type="hidden" asp-for="Sem" />
+            @* <div class="col-md-3 mb-2 form-group">
+                <label asp-for="User.FullName"></label>
+                <input asp-for="User.FullName" class="form-control" disabled />
+                <span class="text-danger" asp-validation-for="User.FullName"></span>
+            </div>
+            <div class="col-md-3 mb-2 form-group">
+                <label asp-for="User.Email"></label>
+                <input asp-for="User.Email" class="form-control" disabled />
+                <span class="text-danger" asp-validation-for="User.Email"></span>
+            </div>
+            <div class="col-md-3 mb-2 form-group">
+                <label asp-for="PRN"></label>
+                <input asp-for="PRN" class="form-control" disabled />
+                <span class="text-danger" asp-validation-for="PRN"></span>
+            </div>
+            <div class="col-md-3 mb-2 form-group">
+                <label asp-for="Aadhaar"></label>
+                <input asp-for="Aadhaar" class="form-control" disabled />
+                <span class="text-danger" asp-validation-for="Aadhaar"></span>
+            </div> *@
+            <div class="col-md-3 mb-2 form-group">
+                <label asp-for="ImageFile"></label>
+                <input asp-for="ImageFile" class="form-control" />
+                <span class="text-danger" asp-validation-for="ImageFile"></span>
+            </div>
+            <div class="col-md-3 mb-2 form-group">
+                <label asp-for="Gender"></label>
+                <select asp-for="Gender" class="form-control">
+                    <option disabled selected>Select</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+                <span class="text-danger" asp-validation-for="Gender"></span>
+            </div>
+            <div class="col-md-3 mb-2 form-group">
+                <label asp-for="DOB"></label>
+                <input asp-for="DOB" class="form-control" />
+                <span class="text-danger" asp-validation-for="DOB"></span>
+            </div>
+            <div class="col-md-3 mb-2 form-group">
+                <label asp-for="RollNo"></label>
+                <input asp-for="RollNo" class="form-control" />
+                <span class="text-danger" asp-validation-for="RollNo"></span>
+            </div>
+            <div class="col-md-3 mb-2 form-group">
+                <label asp-for="BloodGroup"></label>
+                <input asp-for="BloodGroup" class="form-control" />
+                <span class="text-danger" asp-validation-for="BloodGroup"></span>
+            </div>
+            <div class="col-md-3 mb-2 form-group">
+                <label asp-for="Nationality"></label>
+                <input asp-for="Nationality" class="form-control" />
+                <span class="text-danger" asp-validation-for="Nationality"></span>
+            </div>
+            <div class="col-md-3 mb-2 form-group">
+                <label asp-for="Religion"></label>
+                <input asp-for="Religion" class="form-control" />
+                <span class="text-danger" asp-validation-for="Religion"></span>
+            </div>
+            <div class="col-md-3 mb-2 form-group">
+                <label asp-for="Caste"></label>
+                <input asp-for="Caste" class="form-control" />
+                <span class="text-danger" asp-validation-for="Caste"></span>
+            </div>
+            <div class="col-md-3 mb-2 form-group">
+                <label asp-for="CasteCategory"></label>
+                <input asp-for="CasteCategory" class="form-control" />
+                <span class="text-danger" asp-validation-for="CasteCategory"></span>
+            </div>
+            <div class="col-md-12 mb-2 form-group">
+                <label asp-for="Address"></label>
+                <input asp-for="Address" class="form-control" />
+                <span class="text-danger" asp-validation-for="Address"></span>
+            </div>
+            <div class="col-md-12 mb-2 form-group">
+                <button class="btn btn-success" type="submit">Submit</button>
+                <a class="btn btn-light" asp-area="Student" asp-action="Index" asp-controller="Profile">Back</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial.cshtml" />
+    }
+}

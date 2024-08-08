@@ -1,0 +1,54 @@
+@model List<ExamSubject>
+<h1>@ViewData["Title"]</h1>
+
+<div class="row">
+    <div class="col-md-12">
+        <partial name="_Messages" />
+    </div>
+    <div class="col-md-12 mb-2">
+        <a class="btn btn-primary" asp-area="Teacher" asp-action="CreateSubjects" asp-route-id="@ViewData["examId"]" asp-controller="Exam">Add subject to exam</a>
+    </div>
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>Subject</th>
+                        <th>Year</th>
+                        <th>Semester</th>
+                        <th>Theory</th>
+                        <th>Practical</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var i in Model)
+                    {
+                        <tr>
+                            <td>@i.Subject.Code</td>
+                            <td>@i.Subject.Name</td>
+                            <td>@i.Year</td>
+                            <td>@i.Sem</td>
+                            <td>
+                                @if(i.Subject.isTheory == 1)
+                                {
+                                    <a class="text-info" asp-area="Teacher" asp-action="AddTheoryMarks" asp-controller="Exam" asp-route-examId="@i.ExamId" asp-route-subjectId="@i.SubjectId" asp-route-branchId="@i.BranchId" asp-route-examSubjectId="@i.Id">Theory Marks</a>
+                                }
+                            </td>
+                            <td>
+                                @if(i.Subject.isTPractical == 1)
+                                {
+                                    <a class="text-info" asp-area="Teacher" asp-action="AddPracticalMarks" asp-controller="Exam" asp-route-examId="@i.ExamId" asp-route-subjectId="@i.SubjectId" asp-route-branchId="@i.BranchId" asp-route-examSubjectId="@i.Id">Practical Marks</a>
+                                }
+                            </td>
+                            <td>
+                                <a class="text-info" asp-area="Teacher" asp-action="Subjects" asp-controller="Exam" asp-route-id="@i.Id">Edit</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

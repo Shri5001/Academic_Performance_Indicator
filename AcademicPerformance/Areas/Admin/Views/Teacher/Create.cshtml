@@ -1,0 +1,47 @@
+@model TeacherBranchVM
+<h1>@ViewData["Title"]</h1>
+<div class="row">
+    <div class="col-md-12">
+        <div asp-validation-summary="All"></div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <form method="post">
+                    <input asp-for="@Model.Teacher.UserId" value="@Model.User.Id" type="hidden" />
+                    <div class="form-group mb-2">
+                        <label asp-for="@Model.Teacher.BranchId"></label>
+                        <select asp-for="@Model.Teacher.BranchId" asp-items="@Model.Branches" class="form-control">
+                            <option disabled selected>Select Branch</option>
+                        </select>
+                        <span class="text-danger" asp-validation-for="@Model.Teacher.BranchId"></span>
+                    </div>
+                    <div class="form-group mb-2">
+                        <label asp-for="@Model.Teacher.Qualification" class="control-label"></label>
+                        <input asp-for="@Model.Teacher.Qualification" class="form-control" />
+                        <span asp-validation-for="@Model.Teacher.Qualification" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-2">
+                        <label asp-for="@Model.Teacher.isHOD" class="control-label"></label>
+                        <select class="form-control" asp-for="@Model.Teacher.isHOD">
+                            <option disabled selected>Select</option>
+                            <option value="1">Yes</option>
+                            <option value="2">No</option>
+                        </select>
+                        <span asp-validation-for="@Model.Teacher.isHOD" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-2">
+                        <button type="submit" class="btn btn-success">Submit</button>
+                        <a class="btn btn-light" asp-area="Admin" asp-action="Index" asp-controller="User">Back</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial.cshtml" />
+    }
+}

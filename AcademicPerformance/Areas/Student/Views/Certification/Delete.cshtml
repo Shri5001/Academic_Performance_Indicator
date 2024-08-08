@@ -1,0 +1,19 @@
+@model StudentCertification
+<h1>@ViewData["Title"]</h1>
+<div class="row mt-3">
+    <div class="col-md-12">
+        <form class="row" method="post">
+            <input type="hidden" asp-for="Id" />
+            <div class="col-md-12 mb-2 form-group">
+                <button class="btn btn-danger" type="submit">Delete</button>
+                <a class="btn btn-light" asp-area="Student" asp-action="Index" asp-controller="Certification">Back</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial.cshtml" />
+    }
+}

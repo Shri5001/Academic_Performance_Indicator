@@ -1,0 +1,61 @@
+@model Student
+<h1>@ViewData["Title"]</h1>
+<div class="row mt-3">
+    <div class="col-md-12">
+        <form class="row" method="post">
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="ClassSection" />
+            <input type="hidden" asp-for="ClassYear" />
+            <input type="hidden" asp-for="BranchId" />
+            <input type="hidden" asp-for="Aadhaar" />
+            <input type="hidden" asp-for="PRN" />
+            <input type="hidden" asp-for="UserId" />
+            <input type="hidden" asp-for="Sem" />
+            <input type="hidden" asp-for="Gender" />
+            <input type="hidden" asp-for="DOB" />
+            <input type="hidden" asp-for="RollNo" />
+            <input type="hidden" asp-for="BloodGroup" />
+            <input type="hidden" asp-for="Nationality" />
+            <input type="hidden" asp-for="Religion" />
+            <input type="hidden" asp-for="Caste" />
+            <input type="hidden" asp-for="CasteCategory" />
+            <input type="hidden" asp-for="Address" />
+            <div class="col-md-12 mb-2 form-group">
+                <label asp-for="About"></label>
+                <textarea asp-for="About" id="about" class="form-control"></textarea>
+                <span class="text-danger" asp-validation-for="About"></span>
+            </div>
+            <div class="col-md-12 mb-2 form-group">
+                <label asp-for="Interships"></label>
+                <textarea asp-for="Interships" id="hands" class="form-control"></textarea>
+                <span class="text-danger" asp-validation-for="Interships"></span>
+            </div>
+            <div class="col-md-12 mb-2 form-group">
+                <label asp-for="HandsOn"></label>
+                <textarea asp-for="HandsOn" id="interships" class="form-control"></textarea>
+                <span class="text-danger" asp-validation-for="HandsOn"></span>
+            </div>
+            <div class="col-md-12 mb-2 form-group">
+                <label asp-for="OtherActivities"></label>
+                <textarea asp-for="OtherActivities" id="other" class="form-control"></textarea>
+                <span class="text-danger" asp-validation-for="OtherActivities"></span>
+            </div>
+            <div class="col-md-12 mb-2 form-group">
+                <button class="btn btn-success" type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial.cshtml" />
+    }
+    <script src="https://cdn.ckeditor.com/4.17.1/standard/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace('about');
+        CKEDITOR.replace('hands');
+        CKEDITOR.replace('interships');
+        CKEDITOR.replace('other');
+    </script>
+}

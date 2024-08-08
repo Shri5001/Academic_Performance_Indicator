@@ -1,0 +1,34 @@
+@model List<Branch>
+<h1>@ViewData["Title"]</h1>
+
+<div class="row">
+    <div class="col-md-12">
+        <partial name="_Messages" />
+    </div>
+    <div class="col-md-12 mb-2">
+        <a class="btn btn-primary" asp-area="Admin" asp-action="Create" asp-controller="Branch">Create new branch</a>
+    </div>
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach(var i in Model.OrderBy(u => u.Name))
+                    {
+                        <tr>
+                            <td>@i.Name</td>
+                            <td>
+                                <a class="text-info" asp-area="Admin" asp-action="Edit" asp-controller="Branch" asp-route-id="@i.Id">Edit</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

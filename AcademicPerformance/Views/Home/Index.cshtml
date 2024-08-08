@@ -1,0 +1,74 @@
+@using Microsoft.AspNetCore.Identity
+@using AcademicPerformance.Models;
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div>
+    @* <h1 class="display-4">s
+        @if (User.IsInRole("Admin"))
+        {
+            <span>Welcome ADMIN</span>
+        }
+    </h1> *@
+    <h1 class="text-center">Welcome to API System for SND COE & RC,Yeola</h1>
+
+    <div class="row">
+        <div class="col-md-4">
+            <img src="https://sndcoe.ac.in/wp-content/uploads/2020/11/1snd-1024x683-1-768x432.jpg" class="w-100" />
+        </div>
+        <div class="col-md-8 lead">
+            SND College of Engineering & Research Center, Babhulgaon established in 2006-07 is located in Yeola. Yeola is one of the Taluka in Nasik district of Maharashtra. The campus is spread over natural landscape of 150 Acres. The site is very healthy and beautiful & being away from city atmosphere is free from pollution. The city is located at 23 Km from Manmad, 35 Km from holy place, Shirdi. The nearest airport is Aurangabad. The college is situated on Yeola – Lasalgaon road 5 Km from railway station, 3 Km from Bus stand.
+        </div>
+    </div>
+
+    <hr />
+
+    <div class="row mt-5">
+        <div class="col-lg-6">
+            <h3>For Students:</h3>
+            <ul>
+                <li>
+                    <strong>Generate Your Resume:</strong> Input your academic records, extracurricular activities,
+                    and accomplishments, and let our platform create a professional resume tailored to your strengths.
+                </li>
+                <li>
+                    <strong>Track Your Progress:</strong> Monitor your academic performance over time, identify areas
+                    for improvement, and set goals to achieve academic excellence.
+                </li>
+                <li>
+                    <strong>Explore Opportunities:</strong> Browse through a curated list of job openings and
+                    internships relevant to your field of study and interests.
+                </li>
+                <li>
+                    <strong>Connect with Peers:</strong> Join a community of like-minded students, exchange ideas,
+                    and collaborate on projects to enhance your learning experience.
+                </li>
+            </ul>
+        </div>
+        <div class="col-lg-6">
+            <h3>For Teachers and TPOs (Training and Placement Officers):</h3>
+            <ul>
+                <li>
+                    <strong>Provide Feedback:</strong> Evaluate students' academic performance, provide constructive
+                    feedback, and track their progress throughout their academic journey.
+                </li>
+                <li>
+                    <strong>Recommend Opportunities:</strong> Post job openings, internships, and other career
+                    opportunities to our platform, connecting students with relevant employment prospects.
+                </li>
+                <li>
+                    <strong>Facilitate Networking:</strong> Foster connections between students and industry
+                    professionals, organizing events and workshops to enhance students' professional development.
+                </li>
+                <li>
+                    <strong>Monitor Student Success:</strong> Keep track of students' achievements, monitor their
+                    career progression, and celebrate their successes along the way.
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

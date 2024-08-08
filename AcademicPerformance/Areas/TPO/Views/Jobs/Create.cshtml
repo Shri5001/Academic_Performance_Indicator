@@ -1,0 +1,47 @@
+@model JobsBranchVM
+<h1>@ViewData["Title"]</h1>
+<div class="row">
+    <div class="col-md-12">
+        <div asp-validation-summary="All"></div>
+    </div>
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <form method="post">
+                    <input asp-for="@Model.Jobs.Id" type="hidden">
+                    <div class="form-group mb-2">
+                        <label asp-for="@Model.Jobs.BranchId"></label>
+                        <select asp-for="@Model.Jobs.BranchId" asp-items="@Model.Branches" class="form-control">
+                            <option disabled selected>Select Branch</option>
+                        </select>
+                        <span class="text-danger" asp-validation-for="@Model.Jobs.BranchId"></span>
+                    </div>
+                    <div class="form-group mb-2">
+                        <label asp-for="@Model.Jobs.Title" class="control-label"></label>
+                        <input asp-for="@Model.Jobs.Title" class="form-control" />
+                        <span asp-validation-for="@Model.Jobs.Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-2">
+                        <label asp-for="@Model.Jobs.Details" class="control-label"></label>
+                        <textarea asp-for="@Model.Jobs.Details" id="details" class="form-control"></textarea>
+                        <span asp-validation-for="@Model.Jobs.Details" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-2">
+                        <button type="submit" class="btn btn-success">Submit</button>
+                        <a class="btn btn-light" asp-area="TPO" asp-action="Index" asp-controller="Jobs">Back</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial.cshtml" />
+    }
+    <script src="https://cdn.ckeditor.com/4.17.1/standard/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace('details');
+    </script>
+}

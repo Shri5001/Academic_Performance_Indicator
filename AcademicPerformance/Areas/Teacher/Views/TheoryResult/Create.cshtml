@@ -1,0 +1,63 @@
+@model TheoryBranchVM
+<h1>@ViewData["Title"]</h1>
+<div class="row">
+    <div class="col-md-12">
+        <form class="row" method="post">
+            <input asp-for="@Model.TheoryResult.UserId" value="@Model.User.Id" type="hidden" />
+            <div class="form-group mb-2 col-md-3">
+                <label asp-for="@Model.TheoryResult.BranchId"></label>
+                <select asp-for="@Model.TheoryResult.BranchId" asp-items="@Model.Branches" class="form-control">
+                    <option disabled selected>Select Branch</option>
+                </select>
+                <span class="text-danger" asp-validation-for="@Model.TheoryResult.BranchId"></span>
+            </div>
+            <div class="form-group mb-2 col-md-3">
+                <label asp-for="@Model.TheoryResult.SubjectId"></label>
+                <select asp-for="@Model.TheoryResult.SubjectId" asp-items="@Model.Subjects" class="form-control">
+                    <option disabled selected>Select Subject</option>
+                </select>
+                <span class="text-danger" asp-validation-for="@Model.TheoryResult.SubjectId"></span>
+            </div>
+            <div class="form-group col-md-3 mb-2">
+                <label asp-for="@Model.TheoryResult.Year"></label>
+                <input asp-for="@Model.TheoryResult.Year" class="form-control" />
+                <span class="text-danger" asp-validation-for="@Model.TheoryResult.Year"></span>
+            </div>
+            <div class="form-group col-md-3 mb-2">
+                <label asp-for="@Model.TheoryResult.BranchYear"></label>
+                <select asp-for="@Model.TheoryResult.BranchYear" class="form-control">
+                    <option disabled selected>Select</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
+                <span class="text-danger" asp-validation-for="@Model.TheoryResult.BranchYear"></span>
+            </div>
+            <div class="form-group col-md-3 mb-2">
+                <label asp-for="@Model.TheoryResult.Sem"></label>
+                <select asp-for="@Model.TheoryResult.Sem" class="form-control">
+                    <option disabled selected>Select</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                </select>
+                <span class="text-danger" asp-validation-for="@Model.TheoryResult.Sem"></span>
+            </div>
+            <div class="form-group mb-2">
+                <button type="submit" class="btn btn-success">Submit</button>
+                <a class="btn btn-light" asp-area="Teacher" asp-action="Index" asp-controller="TheoryResult">Back</a>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial.cshtml" />
+    }
+}

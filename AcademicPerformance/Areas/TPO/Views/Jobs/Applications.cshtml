@@ -1,0 +1,39 @@
+@model List<JobsApply>
+<h1>@ViewData["Title"]</h1>
+
+<div class="row">
+    <div class="col-md-12">
+        <partial name="_Messages" />
+    </div>
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table class="table table-bordered table-sm">
+                <thead>
+                    <tr>
+                        <th>Student</th>
+                        <th>Email</th>
+                        <th>Contact</th>
+                        <th>Address</th>
+                        <th>Department</th>
+                        <th>Year</th>
+                        <th>Semester</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var i in Model.OrderByDescending(u => u.Id))
+                    {
+                        <tr>
+                            <td>@i.Student.User.FullName</td>
+                            <td>@i.Student.User.Email</td>
+                            <td>@i.Student.Mobile</td>
+                            <td>@i.Student.Address</td>
+                            <td>@i.Student.Branch.Name</td>
+                            <td>@i.Student.ClassYear</td>
+                            <td>@i.Student.Sem</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

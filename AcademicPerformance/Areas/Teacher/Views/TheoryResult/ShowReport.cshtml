@@ -1,0 +1,58 @@
+@model List<TheoryData>
+
+<h1>@ViewData["Title"]</h1>
+<h4 class="text-muted">@ViewData["SubTitle"]</h4>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th>Student</th>
+                        <th>Seat Number</th>
+                        <th>InSem</th>
+                        <th>EndSem</th>
+                        <th>Termwork</th>
+                        <th>Exp.</th>
+                        <th>Total480</th>
+                        <th>Total25</th>
+                        <th>Marks</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var studentData in Model)
+                    {
+                        <tr>
+                            <td>@studentData.StudentId</td>
+                            <td>@studentData.SeatNumber</td>
+                            <td>@studentData.InSem</td>
+                            <td>@studentData.EndSem</td>
+                            <td>@studentData.TermWork</td>
+                            <td>
+                                @{
+                                    int index = 0;
+                                }
+                                @foreach (var mark in studentData.ExperimentMarks)
+                                {
+                                    index += 1;
+                                    <span>@mark &nbsp;</span>
+                                    if (index == 4)
+                                    {
+                                        <br />
+                                        index = 0;
+                                    }
+                                }
+                            </td>
+                            <td>@studentData.Total480</td>
+                            <td>@studentData.Total25</td>
+                            <td>@studentData.Marks</td>
+                            <td>@studentData.Total</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

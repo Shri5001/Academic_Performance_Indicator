@@ -1,0 +1,144 @@
+@model EvaluationViewModel
+
+<h1>@ViewData["Title"]</h1>
+<h4 class="text-muted">@ViewData["SubTitle"]</h4>
+<div class="row">
+    <div class="col-md-12">
+        <partial name="_Messages" />
+    </div>
+
+    <form id="evaluationForm" class="col-md-12" method="post">
+        <input type="hidden" asp-for="@Model.EvaluationReport.Id" />
+        <input type="hidden" asp-for="@Model.EvaluationReport.BranchId" />
+        <input type="hidden" asp-for="@Model.EvaluationReport.BranchYear" />
+        <input type="hidden" asp-for="@Model.EvaluationReport.Year" />
+        <input type="hidden" asp-for="@Model.EvaluationReport.Sem" />
+        <input type="hidden" asp-for="@Model.EvaluationReport.UserId" />
+        <input type="hidden" asp-for="@Model.EvaluationReport.SubjectId" />
+        <div class="table-responsive">
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th>Student Name</th>
+                        <th>SeatNo</th>
+                        @for (int i = 1; i <= 12; i++)
+                        {
+                            <th>Experiment @i</th>
+                        }
+                        <th>Total480</th>
+                        <th>Total25</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var student in Model.Students.OrderBy(u => u.RollNo))
+                    {
+                        <tr>
+                            <td>@student.User.FullName</td>
+                            <td>
+                                <input type="hidden" name="stduser[@student.User.FullName]" value="@student.User.FullName" class="form-control" />
+                                <input type="text" name="seat[@student.User.Id]" class="form-control" />
+                            </td>
+                            @for (int i = 0; i < 12; i++)
+                            {
+                                <td>
+                                    @for (int j = 0; j < 4; j++)
+                                    {
+                                        <input type="number" min="0" max="10" name="students[@student.User.Id][@i][@j]" class="form-control" onchange="calculateTotal(this)" />
+                                    }
+                                </td>
+                            }
+                            <td><input type="text" name="total480[@student.User.Id]" class="form-control" readonly /></td>
+                            <td><input type="text" name="total25[@student.User.Id]" class="form-control" readonly /></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <input type="hidden" id="reportData" asp-for="@Model.EvaluationReport.ReportData" />
+        <button type="button" onclick="submitForm()" class="btn btn-primary mt-3">Submit</button>
+    </form>
+</div>
+
+@section Scripts{
+    <script>
+        function calculateTotal(input) {
+            var row = $(input).closest("tr");
+            var total480 = 0;
+
+            // Calculate total480 for the current row
+            row.find("input[type='number']").each(function () {
+                total480 += parseInt($(this).val()) || 0;
+            });
+
+            // Set total480 value for the current student
+            row.find("input[name^='total480']").val(total480);
+
+            // Calculate total480 for all students
+            var total480AllStudents = 0;
+            $("input[name^='total480']").each(function () {
+                total480AllStudents += parseInt($(this).val()) || 0;
+            });
+
+            // Set total480 value for all students
+            $("#total480AllStudents").val(total480AllStudents);
+
+            // Calculate total25 for the current student
+            var total25 = (total480 * 25) / 480;
+            row.find("input[name^='total25']").val(total25.toFixed(2));
+
+            // Calculate total25 for all students
+            var total25AllStudents = (total480AllStudents * 25) / 480;
+            $("#total25AllStudents").val(total25AllStudents.toFixed(2));
+        }
+
+        function submitForm() {
+            // Initialize an empty array to hold the data for each student
+            var studentData = [];
+
+            // Loop through each table row representing a student
+            $("tbody > tr").each(function () {
+                var rowData = {};
+
+                // Get the student's ID from the seat input field
+                var studentId = $(this).find("input[name^='stduser']").val();
+                rowData["StudentId"] = studentId;
+
+                // Get the seat number
+                var seatNumber = $(this).find("input[name^='seat']").val();
+                rowData["SeatNumber"] = seatNumber;
+
+                // Get the 480
+                var total480 = $(this).find("input[name^='total480']").val();
+                rowData["Total480"] = total480;
+
+                // Get the 25
+                var total25 = $(this).find("input[name^='total25']").val();
+                rowData["Total25"] = total25;
+
+                // Initialize an array to hold the marks for each experiment
+                var experimentMarks = [];
+
+                // Loop through each column representing an experiment
+                $(this).find("input[name^='students']").each(function () {
+                    var marks = parseInt($(this).val()) || 0;
+                    experimentMarks.push(marks);
+                });
+
+                // Add the marks array to the rowData object
+                rowData["ExperimentMarks"] = experimentMarks;
+
+                // Add the data for the current student to the array
+                studentData.push(rowData);
+            });
+
+            // Construct the JSON object
+            var jsonData = JSON.stringify(studentData);
+
+            // Set the JSON data to the hidden input field
+            $("#reportData").val(jsonData);
+
+            // Submit the form
+            $("#evaluationForm").submit();
+        }
+    </script>
+}

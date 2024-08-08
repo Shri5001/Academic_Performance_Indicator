@@ -1,0 +1,36 @@
+@model List<TeacherSubject>
+<h1>@ViewData["Title"]</h1>
+
+<div class="row">
+    <div class="col-md-12">
+        <partial name="_Messages" />
+    </div>
+    <div class="col-md-12 mb-2">
+        <a class="btn btn-primary" asp-area="Admin" asp-action="AddSubject" asp-route-id="@ViewData["userId"]" asp-controller="Teacher">Add Subject</a>
+    </div>
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Subject Code</th>
+                        <th>Subject Name</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var i in Model.OrderBy(u => u.Id))
+                    {
+                        <tr>
+                            <td>@i.Subject.Code</td>
+                            <td>@i.Subject.Name</td>
+                            <td>
+                                <a class="text-info" asp-area="Admin" asp-action="EditSubject" asp-controller="Teacher" asp-route-id="@i.Id">Edit</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

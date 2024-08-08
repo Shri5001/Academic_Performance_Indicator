@@ -1,0 +1,16 @@
+@model StudentJobApplyVM
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="row mt-3">
+    <div class="col-md-12">
+        <div>
+            @Html.Raw(@Model.Job.Details)
+        </div>
+        <form method="post" class="col-md-12 mt-3">
+            <input type="hidden" asp-for="@Model.JobsApply.JobsId" value="@Model.Job.Id" />
+            <input type="hidden" asp-for="@Model.JobsApply.StudentId" value="@Model.Student.Id" />
+            <button type="submit" class="btn btn-success">Apply for this job</button>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,79 @@
+@model StudentBarnchVM
+<h1>@ViewData["Title"]</h1>
+<div class="row">
+    <div class="col-md-12">
+        <div asp-validation-summary="All"></div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <form method="post">
+                    <input asp-for="@Model.Student.UserId" value="@Model.User.Id" type="hidden" />
+                    <div class="form-group mb-2">
+                        <label asp-for="@Model.Student.BranchId"></label>
+                        <select asp-for="@Model.Student.BranchId" asp-items="@Model.Branches" class="form-control">
+                            <option disabled selected>Select Branch</option>
+                        </select>
+                        <span class="text-danger" asp-validation-for="@Model.Student.BranchId"></span>
+                    </div>
+                    <div class="form-group mb-2">
+                        <label asp-for="@Model.Student.PRN" class="control-label"></label>
+                        <input asp-for="@Model.Student.PRN" class="form-control" />
+                        <span asp-validation-for="@Model.Student.PRN" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-2">
+                        <label asp-for="@Model.Student.Aadhaar" class="control-label"></label>
+                        <input asp-for="@Model.Student.Aadhaar" class="form-control" />
+                        <span asp-validation-for="@Model.Student.Aadhaar" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-2">
+                        <label asp-for="@Model.Student.ClassSection" class="control-label"></label>
+                        <input asp-for="@Model.Student.ClassSection" class="form-control" />
+                        <span asp-validation-for="@Model.Student.ClassSection" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-2">
+                        <label asp-for="@Model.Student.ClassYear" class="control-label"></label>
+                        <select asp-for="@Model.Student.ClassYear" class="form-control">
+                            <option disabled selected>Select</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
+                        <span asp-validation-for="@Model.Student.ClassYear" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-2">
+                        <label asp-for="@Model.Student.Sem" class="control-label"></label>
+                        <select asp-for="@Model.Student.Sem" class="form-control">
+                            <option disabled selected>Select</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                        </select>
+                        <span asp-validation-for="@Model.Student.Sem" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-2">
+                        <label asp-for="@Model.Student.Mobile" class="control-label"></label>
+                        <input asp-for="@Model.Student.Mobile" class="form-control" />
+                        <span asp-validation-for="@Model.Student.Mobile" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-2">
+                        <button type="submit" class="btn btn-success">Submit</button>
+                        <a class="btn btn-light" asp-area="Admin" asp-action="Index" asp-controller="User">Back</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial.cshtml" />
+    }
+}

@@ -1,0 +1,42 @@
+@model List<Exam>
+<h1>@ViewData["Title"]</h1>
+
+@if (ViewData["isHod"] == "1")
+{
+    <h4 class="mb-5">As you're an HOD, you're eligible to Generate & View the reports</h4>
+    <div class="row">
+        <div class="col-md-12">
+            <partial name="_Messages" />
+        </div>
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Academic Year</th>
+                            <th>Month</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var i in Model)
+                        {
+                            <tr>
+                                <td>@i.Year</td>
+                                <td>@i.Month</td>
+                                <td>
+                                    <a class="text-info" asp-area="Teacher" asp-action="GenerateReport" asp-controller="Dashboard" asp-route-id="@i.Id">Generate Report</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <h4>As you're a Teacher, you're not eligible to Generate & View the reports</h4>
+    <p>Meanwhile, create reports is an option for you from the above "Examination" in menubar.</p>
+}
